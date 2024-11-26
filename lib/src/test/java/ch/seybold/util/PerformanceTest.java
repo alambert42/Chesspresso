@@ -14,7 +14,6 @@
 
 package ch.seybold.util;
 
-import junit.framework.*;
 import java.text.*;
 
 
@@ -24,7 +23,7 @@ import java.text.*;
  * @author  Bernhard Seybold
  * @version $Revision: 1.1 $
  */
-public abstract class PerformanceTest extends TestCase
+public abstract class PerformanceTest
 {
 
     private static final int

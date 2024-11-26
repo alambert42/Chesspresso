@@ -14,10 +14,7 @@
 
 package ch.seybold.util;
 
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.EOFException;
 import java.io.File;
@@ -110,7 +107,7 @@ public abstract class FootprintTestCase
             m_in = new LineNumberReader(new InputStreamReader(in));
         } else {
             // no input found -> produce output
-            assertTrue("Output file exists", !new File(name).exists());
+            assertFalse(new File(name).exists(), "Output file exists");
             if (zipped) {
                 m_out = new PrintStream(new GZIPOutputStream(new FileOutputStream(name)));
             } else {
@@ -174,11 +171,11 @@ public abstract class FootprintTestCase
                 }
             } else {
                 if (newline) {
-                    assertEquals("In line " + m_in.getLineNumber(), m_in.readLine(), s);
+                    assertEquals(m_in.readLine(), s, "In line " + m_in.getLineNumber());
                 } else {
                     char[] buf = new char[s.length()];
                     m_in.read(buf, 0, s.length());
-                    assertEquals("In line " + m_in.getLineNumber(), new String(buf), s);
+                    assertEquals( new String(buf), s, "In line " + m_in.getLineNumber());
                 }
             }
         } catch (IOException ex) {

@@ -14,17 +14,16 @@
 
 package chesspresso.position;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 
-import org.junit.Test;
-
 import chesspresso.Chess;
 import chesspresso.move.IllegalMoveException;
 import chesspresso.move.Move;
+import org.junit.jupiter.api.Test;
 
 /**
  *
@@ -74,9 +73,9 @@ public abstract class MoveablePositionTests extends MutablePositionTests
         MoveablePosition position = createMoveablePosition();
         
         position.setStart();
-        assertEquals("Moves in startpos",
-                     "{Na3,a3,b3,Nc3,c3,d3,e3,Nf3,f3,g3,Nh3,h3,a4,b4,c4,d4,e4,f4,g4,h4}",
-                     getAllMoves(position));
+        assertEquals("{Na3,a3,b3,Nc3,c3,d3,e3,Nf3,f3,g3,Nh3,h3,a4,b4,c4,d4,e4,f4,g4,h4}",
+                getAllMoves(position),
+                "Moves in startpos");
     }
     
     @Test
@@ -93,7 +92,7 @@ public abstract class MoveablePositionTests extends MutablePositionTests
             MoveablePosition position = createMoveablePosition();
             FEN.initFromFEN(position, fen, true);
             String moves = getAllMoves(position);
-            assertEquals("Moves wrong in position \"" + fen + "\"", fileMoves, moves);
+            assertEquals( fileMoves, moves, "Moves wrong in position \"" + fen + "\"");
         }
     }
     

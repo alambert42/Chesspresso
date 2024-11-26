@@ -14,11 +14,10 @@
 
 package chesspresso.position;
 
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 import chesspresso.Chess;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for the FEN class.
@@ -32,7 +31,7 @@ public class FENTests {
     public void testChars() {
         for (int stone=Chess.MIN_STONE; stone<Chess.MAX_PIECE - 1; stone++) {
             if (stone != Chess.NO_STONE) {
-                assertEquals("stone changed", stone, FEN.fenCharToStone(FEN.stoneToFenChar(stone)));
+                assertEquals(stone, FEN.fenCharToStone(FEN.stoneToFenChar(stone)), "stone changed");
             }
         }
     }

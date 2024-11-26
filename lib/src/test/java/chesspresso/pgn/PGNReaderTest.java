@@ -14,19 +14,17 @@
 
 package chesspresso.pgn;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.io.InputStream;
-import java.util.zip.GZIPInputStream;
-
-import org.junit.Test;
-
 import ch.seybold.util.FootprintTestCase;
 import chesspresso.game.Game;
 import chesspresso.game.GameModel;
 import chesspresso.move.Move;
 import chesspresso.position.Position;
+import org.junit.jupiter.api.Test;
+
+import java.io.InputStream;
+import java.util.zip.GZIPInputStream;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 
 /**
@@ -138,9 +136,9 @@ public class PGNReaderTest extends FootprintTestCase
             String fen = game.getTag(PGN.TAG_FEN);
             if (fen != null) {
                 Position fenPos = new Position(fen, false);
-                assertEquals("FEN present, but start position is wrong, fen = " + fen, fenPos.getHashCode(), game.getPosition().getHashCode());
+                assertEquals(fenPos.getHashCode(), game.getPosition().getHashCode(), "FEN present, but start position is wrong, fen = " + fen);
             } else {
-                assertTrue("initial position is not start position", game.getPosition().isStartPosition());
+                assertTrue(game.getPosition().isStartPosition(),"initial position is not start position");
             }           
             
             int numOfPlies = game.getNumOfPlies();
@@ -159,20 +157,20 @@ public class PGNReaderTest extends FootprintTestCase
                 /*---------- test getAllMoves ----------*/
                 short allMoves[] = pos.getAllMoves();
                 writeln(pos.getMovesAsString(allMoves, true));
-                assertEquals("error in canMove", allMoves.length != 0, pos.canMove());
+                assertEquals(allMoves.length != 0, pos.canMove(), "error in canMove");
 
                 /*---------- test capturing moves ----------*/
                 short[] capturingMoves = pos.getAllCapturingMoves();                
                 for (int i = 0; i < capturingMoves.length; i++) {
                     short moveDesc = capturingMoves[i];
-                    assertTrue("Move produced by 'getAllCapturingMoves' is non-capturing: " + Integer.toBinaryString(moveDesc) + " " + Move.getString(moveDesc), Move.isCapturing(moveDesc));
+                    assertTrue( Move.isCapturing(moveDesc), "Move produced by 'getAllCapturingMoves' is non-capturing: " + Integer.toBinaryString(moveDesc) + " " + Move.getString(moveDesc));
                     pos.doMove(moveDesc);
                     Move m = pos.getLastMove();
-                    assertTrue("Move.isCapturing is wrong for capturing move: " + m, m.isCapturing());
-                    assertEquals("Move.isCheck does not correspond to pos.isCheck" + m, m.isCheck(), pos.isCheck());
-                    assertEquals("Move.isCheck does not correspond to pos.isCheck (2nd check)" + m, m.isCheck(), pos.isCheck());
-                    assertEquals("Move.isMate does not correspond to pos.isMate" + m, m.isMate(), pos.isMate());
-                    assertEquals("Move.isMate does not correspond to pos.isMate (2nd check)" + m, m.isMate(), pos.isMate());
+                    assertTrue(m.isCapturing(), "Move.isCapturing is wrong for capturing move: " + m);
+                    assertEquals( m.isCheck(), pos.isCheck(), "Move.isCheck does not correspond to pos.isCheck" + m);
+                    assertEquals( m.isCheck(), pos.isCheck(), "Move.isCheck does not correspond to pos.isCheck (2nd check)" + m);
+                    assertEquals(m.isMate(), pos.isMate(), "Move.isMate does not correspond to pos.isMate" + m);
+                    assertEquals(m.isMate(), pos.isMate(), "Move.isMate does not correspond to pos.isMate (2nd check)" + m);
                     pos.undoMove();
                 }
                 
@@ -180,34 +178,34 @@ public class PGNReaderTest extends FootprintTestCase
                 short[] nonCapturingMoves = pos.getAllNonCapturingMoves();
                 for (int i = 0; i < nonCapturingMoves.length; i++) {
                     short moveDesc = nonCapturingMoves[i];
-                    assertTrue("Move produced by 'getAllNonCapturingMoves' is capturing: " + Move.getString(moveDesc), !Move.isCapturing(moveDesc));
+                    assertFalse(Move.isCapturing(moveDesc), "Move produced by 'getAllNonCapturingMoves' is capturing: " + Move.getString(moveDesc));
                     pos.doMove(moveDesc);
                     Move m = pos.getLastMove();
-                    assertTrue("Move.isCapturing is wrong for non-capturing move: " + m, !m.isCapturing());
-                    assertEquals("Move.isCheck does not correspond to pos.isCheck" + m, m.isCheck(), pos.isCheck());
-                    assertEquals("Move.isCheck does not correspond to pos.isCheck (2nd check)" + m, m.isCheck(), pos.isCheck());
-                    assertEquals("Move.isMate does not correspond to pos.isMate" + m, m.isMate(), pos.isMate());
-                    assertEquals("Move.isMate does not correspond to pos.isMate (2nd check)" + m, m.isMate(), pos.isMate());
+                    assertFalse(m.isCapturing(), "Move.isCapturing is wrong for non-capturing move: " + m);
+                    assertEquals( m.isCheck(), pos.isCheck(), "Move.isCheck does not correspond to pos.isCheck" + m);
+                    assertEquals( m.isCheck(), pos.isCheck(), "Move.isCheck does not correspond to pos.isCheck (2nd check)" + m);
+                    assertEquals( m.isMate(), pos.isMate(), "Move.isMate does not correspond to pos.isMate" + m);
+                    assertEquals( m.isMate(), pos.isMate(), "Move.isMate does not correspond to pos.isMate (2nd check)" + m);
                     pos.undoMove();
                 }
                 
                 /*---------- test sum ----------*/
-                assertEquals("capturing / non-capturing moves don't add up", allMoves.length, capturingMoves.length + nonCapturingMoves.length);
+                assertEquals(allMoves.length, capturingMoves.length + nonCapturingMoves.length, "capturing / non-capturing moves don't add up");
                 
                 /*---------- move forward ----------*/
                 if (plyIndex < numOfPlies) {
-                    assertTrue("Unexpected end of game at ply " + plyIndex + " of " + numOfPlies, game.hasNextMove());
+                    assertTrue( game.hasNextMove(), "Unexpected end of game at ply " + plyIndex + " of " + numOfPlies);
                     game.goForward();
                 }
             }
             for (int plyIndex = numOfPlies - 1; plyIndex >=0; plyIndex--) {
-                assertTrue("cannot undo move", game.getPosition().canUndoMove());
+                assertTrue( game.getPosition().canUndoMove(), "cannot undo move");
                 game.getPosition().undoMove();
-                assertEquals("hash code changed while undoing moves", hashCodes[plyIndex], game.getPosition().getHashCode());
+                assertEquals(hashCodes[plyIndex], game.getPosition().getHashCode(), "hash code changed while undoing moves");
             }
             for (int plyIndex = 0; plyIndex < numOfPlies; plyIndex++) {
-                assertTrue("cannot redo move", game.getPosition().canRedoMove());
-                assertEquals("hash code changed while redoing moves", hashCodes[plyIndex], game.getPosition().getHashCode());
+                assertTrue(game.getPosition().canRedoMove(), "cannot redo move");
+                assertEquals(hashCodes[plyIndex], game.getPosition().getHashCode(), "hash code changed while redoing moves");
                 game.getPosition().redoMove();
             }
 

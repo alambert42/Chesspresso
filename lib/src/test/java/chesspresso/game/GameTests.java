@@ -13,14 +13,13 @@
  */
 package chesspresso.game;
 
-import java.io.InputStream;
-import java.util.zip.GZIPInputStream;
-
-import org.junit.Test;
-
 import ch.seybold.util.FootprintTestCase;
 import chesspresso.pgn.PGNReader;
 import chesspresso.pgn.PGNWriter;
+import org.junit.jupiter.api.Test;
+
+import java.io.InputStream;
+import java.util.zip.GZIPInputStream;
 
 /**
  * 

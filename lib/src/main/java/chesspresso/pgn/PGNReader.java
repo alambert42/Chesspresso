@@ -118,9 +118,7 @@ public final class PGNReader extends PGN
         setInput(new InputStreamReader(in), name);
     }
 
-    /**
-     *@deprecated
-     */
+    @Deprecated
     public PGNReader(String filename) throws IOException
     {
         init();
@@ -131,9 +129,7 @@ public final class PGNReader extends PGN
         }
     }
 
-    /**
-     *@deprecated
-     */
+    @Deprecated
     public PGNReader(URL url) throws MalformedURLException, IOException
     {
         init();
@@ -143,9 +139,7 @@ public final class PGNReader extends PGN
             setInput(new InputStreamReader(url.openStream()), url.getFile());
     }
 
-    /**
-     *@deprecated
-     */
+    @Deprecated
     public PGNReader(Reader reader, String name)
     {
         init();

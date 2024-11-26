@@ -6,12 +6,10 @@
 
 package chesspresso.move;
 
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
-
 import chesspresso.Chess;
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 /**
@@ -19,7 +17,7 @@ import junit.framework.TestCase;
  * @author  BerniMan
  * @version 
  */
-public class MoveTests extends TestCase
+public class MoveTests
 {
 
     private void checkMove(short move,
@@ -30,19 +28,19 @@ public class MoveTests extends TestCase
     {
         if (!isSpecial) {
             if (!isCastle) {
-                assertEquals("from is wrong " + Move.getString(move),           from,        Move.getFromSqi(move));
-                assertEquals("to is wrong " + Move.getString(move),             to,          Move.getToSqi(move));
-                assertEquals("isCapturing is wrong " + Move.getString(move),    isCapturing, Move.isCapturing(move));
-                assertEquals("isPromotion is wrong " + Move.getString(move),    isPromo,     Move.isPromotion(move));
-                assertEquals("promotionPiece is wrong " + Move.getString(move), promoPiece,  Move.getPromotionPiece(move));
-                assertEquals("isEPMove is wrong " + Move.getString(move),       isEPMove,    Move.isEPMove(move));
+                assertEquals(from,        Move.getFromSqi(move),"from is wrong " + Move.getString(move));
+                assertEquals(to,          Move.getToSqi(move), "to is wrong " + Move.getString(move));
+                assertEquals(isCapturing, Move.isCapturing(move), "isCapturing is wrong " + Move.getString(move));
+                assertEquals(isPromo,     Move.isPromotion(move), "isPromotion is wrong " + Move.getString(move));
+                assertEquals(promoPiece,  Move.getPromotionPiece(move), "promotionPiece is wrong " + Move.getString(move));
+                assertEquals(isEPMove,    Move.isEPMove(move), "isEPMove is wrong " + Move.getString(move) );
             }
-            assertEquals("isCastle is wrong " + Move.getString(move),      isCastle,      Move.isCastle(move));
-            assertEquals("isLongCastle is wrong " + Move.getString(move),  isShortCastle, Move.isShortCastle(move));
-            assertEquals("isShortCastle is wrong " + Move.getString(move), isLongCastle,  Move.isLongCastle(move));
+            assertEquals(isCastle,      Move.isCastle(move), "isCastle is wrong " + Move.getString(move));
+            assertEquals(isShortCastle, Move.isShortCastle(move), "isLongCastle is wrong " + Move.getString(move) );
+            assertEquals(isLongCastle,  Move.isLongCastle(move), "isShortCastle is wrong " + Move.getString(move));
         }
-        assertEquals("isSpecial is wrong " + Move.getString(move), isSpecial, Move.isSpecial(move));
-        assertEquals("isValid is wrong " + Move.getString(move),   isValid  , Move.isValid(move));
+        assertEquals(isSpecial, Move.isSpecial(move), "isSpecial is wrong " + Move.getString(move));
+        assertEquals(isValid  , Move.isValid(move), "isValid is wrong " + Move.getString(move));
     }
     
     @Test

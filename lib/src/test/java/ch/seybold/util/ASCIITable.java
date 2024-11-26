@@ -145,7 +145,7 @@ public class ASCIITable
      
     public void addSeparator(char separator)
     {
-        m_lines.add(new Character(separator));
+        m_lines.add(Character.valueOf(separator));
     }
      
     private String[] getColumn(int col)

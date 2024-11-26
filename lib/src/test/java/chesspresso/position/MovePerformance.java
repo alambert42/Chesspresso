@@ -17,13 +17,12 @@ package chesspresso.position;
 import java.io.InputStream;
 import java.util.zip.GZIPInputStream;
 
-import org.junit.Test;
-
 import ch.seybold.util.PerformanceTest;
 import chesspresso.game.Game;
 import chesspresso.game.GameModel;
 import chesspresso.move.Move;
 import chesspresso.pgn.PGNReader;
+import org.junit.jupiter.api.Test;
 
 
 /**

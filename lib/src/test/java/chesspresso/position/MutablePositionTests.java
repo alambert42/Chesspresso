@@ -14,10 +14,9 @@
 
 package chesspresso.position;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.junit.jupiter.api.Test;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
@@ -37,7 +36,7 @@ public abstract class MutablePositionTests extends PositionTests
         MutablePosition position = createMutablePosition();
         
         FEN.initFromFEN(position, FEN.START_POSITION, true);
-        assertEquals("STARTPOS", FEN.START_POSITION, position.getFEN());
+        assertEquals(FEN.START_POSITION, position.getFEN(), "STARTPOS");
     }
     
     @Test
@@ -46,8 +45,8 @@ public abstract class MutablePositionTests extends PositionTests
         MutablePosition position = createMutablePosition();
         
         position.setStart();        
-        assertTrue("Initial position is not legal", position.isLegal());
-        assertTrue("Initial position is not the start position", position.isStartPosition());
+        assertTrue(position.isLegal(), "Initial position is not legal");
+        assertTrue( position.isStartPosition(), "Initial position is not the start position");
     }
 
 }
